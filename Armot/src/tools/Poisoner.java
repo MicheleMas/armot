@@ -69,10 +69,8 @@ public class Poisoner implements Runnable {
 													// address of the PC in use
 													// (good idea?)
 		} catch (IOException e) {
-			// TODO do something
 			ok = false;
 		} catch (NullPointerException e) {
-			// TODO do something
 			ok = false;
 		}
 
@@ -80,7 +78,6 @@ public class Poisoner implements Runnable {
 		try {
 			captor.setFilter("arp", true);
 		} catch (IOException e) {
-			// TODO do something
 			ok = false;
 		}
 

@@ -50,14 +50,14 @@ public class FakeGuiPanel extends JPanel {
 	public void newList(ArrayList<String> ip, boolean toAsk, String targetIP) {
 		this.targetIP = targetIP;
 		if (list.size() != 0 && toAsk) {
-			boolean realToAsk = false;
+			/*boolean realToAsk = false;
 			for (int i = 0; i < list.size() && !realToAsk; i++) {
 				if (list.get(i).getCheckBox().isSelected())
 					realToAsk = true;
 			}
 			if (realToAsk)
 				JOptionPane.showMessageDialog(null, "Eventuali ip bloccati verranno rilasciati");
-			stopAll();
+			stopAll();*/
 			list = new ArrayList<FakeGuiObj>();
 			removeAll();
 			for (int i = 0; i < ip.size(); i++)
@@ -67,23 +67,23 @@ public class FakeGuiPanel extends JPanel {
 			boolean[] prevStatus = new boolean[list.size()];
 			for (int i = 0; i < prevStatus.length; i++) {
 				prevStatus[i] = list.get(i).getCheckBox().isSelected();
-				if (prevStatus[i])
-					list.get(i).stopFakeArp();
+				/*if (prevStatus[i])
+					list.get(i).stopFakeArp();*/
 			}
 			list = new ArrayList<FakeGuiObj>();
 			for (int i = 0; i < ip.size(); i++)
 				addFakeGuiObj(ip.get(i));
 			for (int i = 0; i < prevStatus.length; i++) {
 				list.get(i).getCheckBox().setSelected(prevStatus[i]);
-				if (prevStatus[i])
-					list.get(i).startFakeArp();
+				/*if (prevStatus[i])
+					list.get(i).startFakeArp();*/
 			}
 		}
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), "Connections to "+targetIP,TitledBorder.CENTER, TitledBorder.TOP,
 				new Font("Arial", Font.BOLD, 18)));
 		window.paintComponents(window.getGraphics());
 //		window.paintAll(window.getGraphics());
-	}
+	} 
 
 	public void colorIp(Color color, boolean noForward) {
 		for (int i = 0; i < list.size(); i++) {
@@ -109,11 +109,11 @@ public class FakeGuiPanel extends JPanel {
 		this.sender = sender;
 	}
 
-	public void stopAll() {
+	/*public void stopAll() {
 		for (int i = 0; i < list.size(); i++) {
 			list.get(i).stopFakeArp();
 		}
-	}
+	}*/
 
 	public void stopAndExit() {
 		for (int i = 0; i < list.size(); i++) {

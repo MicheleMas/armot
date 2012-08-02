@@ -31,7 +31,7 @@ public class ConnectionHandler implements Runnable {
 	}
 
 	private void populateLists() {
-		System.out.println("starting populating list...");
+		// System.out.println("starting populating list...");
 		String[][] matrix = table.getIpPacketSent(ip); // "TIMESTAMP",
 														// "DESTINATION",
 														// "PROTOCOL",
@@ -45,9 +45,9 @@ public class ConnectionHandler implements Runnable {
 				if (matrix[i][1] != null && matrix[i][2] != null
 						&& matrix[i][3] != null && matrix[i][4] != null)
 					if (!alreadyAdd.contains("" + matrix[i][3] + matrix[i][4])) {
-						System.out.println(matrix[i][1] + " - " + matrix[i][4]
-								+ " - " + matrix[i][3] + " - " + matrix[i][2]
-								+ " - ");
+						// System.out.println(matrix[i][1] + " - " + matrix[i][4]
+						//		+ " - " + matrix[i][3] + " - " + matrix[i][2]
+						//		+ " - ");
 						listIN[lengthIN][0] = matrix[i][1];
 						listIN[lengthIN][1] = matrix[i][4];
 						listIN[lengthIN][2] = matrix[i][3];
@@ -114,19 +114,19 @@ public class ConnectionHandler implements Runnable {
 		} else {
 			listOUT = new String[0][0];
 		}
-		System.out.println("list populated!");
+		// System.out.println("list populated!");
 	}
 
 	private void updateLists() {
-		System.out.println("lenghtIN: " + lengthIN);
+		// System.out.println("lenghtIN: " + lengthIN);
 		for (int i = 0; i < lengthIN; i++) {
 			int newCount = table.countIpPacketSentByPort(ip,
 					Integer.parseInt(listIN[i][2]),
 					Integer.parseInt(listIN[i][1]));
 			int delta = newCount - Integer.parseInt(listIN[i][5]);
 			listIN[i][5] = "" + newCount;
-			listIN[i][4] = "" + (delta * 65535 / 1000);
-			System.out.println("DEBUG --- update " + listIN[i][2] + " done, speed " + listIN[i][4]);
+			listIN[i][4] = "" + (delta * 65535 / 1000); // TODO check this
+			// System.out.println("DEBUG --- update " + listIN[i][2] + " done, speed " + listIN[i][4]);
 			/*
 			 * Connection connection = listIN.get(i); int newCount =
 			 * table.countIpPacketSentByPort(ip, connection.getSrcPort(),
@@ -136,7 +136,7 @@ public class ConnectionHandler implements Runnable {
 			 * in Kbps
 			 */
 		}
-		System.out.println("lengthOUT: " + lengthOUT);
+		// System.out.println("lengthOUT: " + lengthOUT);
 		for (int i = 0; i < lengthOUT; i++) {
 			int newCount = table.countIpPacketReceivedByPort(ip,
 					Integer.parseInt(listOUT[i][1]),
