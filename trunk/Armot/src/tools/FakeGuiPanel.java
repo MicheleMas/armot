@@ -79,7 +79,7 @@ public class FakeGuiPanel extends JPanel {
 					list.get(i).startFakeArp();*/
 			}
 		}
-		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), "Connections to "+targetIP,TitledBorder.CENTER, TitledBorder.TOP,
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), "Connections of "+targetIP,TitledBorder.CENTER, TitledBorder.TOP,
 				new Font("Arial", Font.BOLD, 18)));
 		window.paintComponents(window.getGraphics());
 //		window.paintAll(window.getGraphics());
