@@ -50,7 +50,8 @@ public class Sender implements Runnable {
 		} catch (UnknownHostException e) {
 			System.out.println("A sender thread (to IP " + targetIP + ") died unexpectedly");
 		} catch (InterruptedException e) {
-			System.out.println("The thread with target " + targetIP + " has been interrupted without stop method");
+			stop = true;
+			// System.out.println("The thread with target " + targetIP + " has been interrupted without stop method");
 		} catch (IllegalArgumentException e) {
 			System.out.println("Invalid mac address for ip " + targetIP + ", the thread has been stopped");
 		}
