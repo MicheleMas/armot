@@ -63,7 +63,7 @@ public class BroadcastWindow extends JFrame {
 
 			}
 		});
-		//pack();
+		pack();
 
 	}
 

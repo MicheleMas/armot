@@ -32,13 +32,17 @@ public class FakeGuiObj extends JPanel {
 	private byte[] myMac;
 
 	private JpcapSender sender;
+	
+	private FakeHandler handler;
 
 	public FakeGuiObj(final String ip, int width, final String targetIP, final byte[] myMac, final JpcapSender sender) {
 		super();
+		this.handler = new FakeHandler();
 		this.targetIP = targetIP;
 		this.myMac = myMac;
 		this.sender = sender;
-		checkbox = new JCheckBox(ip, false);
+		checkbox = new JCheckBox(ip, handler.isActive(ip, targetIP));
+		System.out.println("the checkbox " + ip + " to " + targetIP + " is " + handler.isActive(ip, targetIP)); // +++++ DEBUG +++++
 		this.ip = ip;
 		setLayout(new MigLayout());
 		setSize(width / 2 - 80, 80);
@@ -51,13 +55,18 @@ public class FakeGuiObj extends JPanel {
 				if (checkbox.isSelected()) {
 					// System.out.println("target "+targetIP+" connected "+ip);
 
-					packetSender = new Sender(targetIP, ip, myMac, sender);
+					handler.addThread(ip, targetIP, myMac, sender);
+					
+					/*packetSender = new Sender(targetIP, ip, myMac, sender);
 					ps = new Thread(packetSender);
-					ps.start();
+					ps.start();*/
 				} else {
 					checkbox.setForeground(Color.BLACK);
 					checkbox.setText(getIP());
-					ps.interrupt();
+					
+					handler.stopThread(ip, targetIP);
+					
+					//ps.interrupt();
 					// TODO stoppare
 				}
 			}
@@ -76,12 +85,12 @@ public class FakeGuiObj extends JPanel {
 
 	public void stopFakeArp() {
 		if (checkbox.isSelected())
-			ps.interrupt();
+			handler.stopThread(ip, targetIP);
 	}
 
-	public void startFakeArp() {
+	/*public void startFakeArp() {
 		packetSender = new Sender(targetIP, ip, myMac, sender);
 		ps = new Thread(packetSender);
 		ps.start();
-	}
+	}*/
 }
