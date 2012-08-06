@@ -76,7 +76,7 @@ public class Table {
 	public synchronized void putIpPacketSent(String ip, String time, IPPacket packet) {
 
 		if (ip_packet_sent.findKeyPos(ip) < 0) {
-			ip_packet_sent.put(ip, new Hashtable<String, IPPacket>());
+			ip_packet_sent.put(ip, new PacketList<String, IPPacket>());
 			ip_packet_sent.get(ip).put(time, packet);
 		} else
 			ip_packet_sent.get(ip).put(time, packet);
@@ -159,7 +159,7 @@ public class Table {
 	public synchronized void putIpPacketReceived(String ip, String time, IPPacket packet) {
 
 		if (ip_packet_received.findKeyPos(ip) < 0) {
-			ip_packet_received.put(ip, new Hashtable<String, IPPacket>());
+			ip_packet_received.put(ip, new PacketList<String, IPPacket>());
 			ip_packet_received.get(ip).put(time, packet);
 		} else
 			ip_packet_received.get(ip).put(time, packet);
