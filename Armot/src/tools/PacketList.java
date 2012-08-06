@@ -1,6 +1,9 @@
 package tools;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+
 import jpcap.packet.IPPacket;
 
 
@@ -65,6 +68,15 @@ public class PacketList<String, V> {
 		for (int i = 0; i < size(); i++)
 			keys.add(a.get(i).getKey());
 		return keys;
+	}
+	
+	public Enumeration<String> keys() {
+		ArrayList<String> tmp = new ArrayList<String>();
+		for(int i=0; i < a.size(); i++) {
+			tmp.add(a.get(i).getKey());
+		}
+		
+		return Collections.enumeration(tmp);
 	}
 
 	public void clear() {
