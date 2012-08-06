@@ -20,11 +20,11 @@ public class Table {
 
 	// tabella che associa ad ogni ip i pacchetti inviati
 
-	static ArrayListPacket<String, Hashtable<String, IPPacket>> ip_packet_sent;
+	static ArrayListPacket<String, PacketList<String, IPPacket>> ip_packet_sent;
 
 	// tabella che associa ad ogni ip i pacchetti ricevuti
 
-	static ArrayListPacket<String, Hashtable<String, IPPacket>> ip_packet_received;
+	static ArrayListPacket<String, PacketList<String, IPPacket>> ip_packet_received;
 
 	public Table() {
 
@@ -33,9 +33,9 @@ public class Table {
 		if (ip_mac == null)
 			ip_mac = new ArrayListIPMAC<String, String>();
 		if (ip_packet_sent == null)
-			ip_packet_sent = new ArrayListPacket<String, Hashtable<String, IPPacket>>();
+			ip_packet_sent = new ArrayListPacket<String, PacketList<String, IPPacket>>();
 		if (ip_packet_received == null)
-			ip_packet_received = new ArrayListPacket<String, Hashtable<String, IPPacket>>();
+			ip_packet_received = new ArrayListPacket<String, PacketList<String, IPPacket>>();
 	}
 
 	// metodo che dice se un ip è contenuto o meno nella tabella dei mac
@@ -142,7 +142,7 @@ public class Table {
 		return 0;
 	}
 	
-	public synchronized ArrayListPacket<String, Hashtable<String, IPPacket>> getSentPacketArrayList() {
+	public synchronized ArrayListPacket<String, PacketList<String, IPPacket>> getSentPacketArrayList() {
 		return ip_packet_sent;
 	}
 
@@ -224,7 +224,7 @@ public class Table {
 		return 0;
 	}
 	
-	public synchronized ArrayListPacket<String, Hashtable<String, IPPacket>> getReceivedPacketArrayList() {
+	public synchronized ArrayListPacket<String, PacketList<String, IPPacket>> getReceivedPacketArrayList() {
 		return ip_packet_received;
 	}
 

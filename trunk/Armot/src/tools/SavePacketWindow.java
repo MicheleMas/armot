@@ -165,9 +165,9 @@ public class SavePacketWindow extends JFrame {
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter outFile = new PrintWriter(bw);
 
-				ArrayListPacket<String, Hashtable<String, IPPacket>> sentPacket = table
+				ArrayListPacket<String, PacketList<String, IPPacket>> sentPacket = table
 						.getSentPacketArrayList();
-				ArrayListPacket<String, Hashtable<String, IPPacket>> receivedPacket = table
+				ArrayListPacket<String, PacketList<String, IPPacket>> receivedPacket = table
 						.getReceivedPacketArrayList();
 
 				ArrayList<String> IPs = sentPacket.getKeys();
@@ -220,9 +220,9 @@ public class SavePacketWindow extends JFrame {
 						true, 20);
 				JpcapWriter writer = JpcapWriter.openDumpFile(captor, fileName);
 
-				ArrayListPacket<String, Hashtable<String, IPPacket>> sentPacket = table
+				ArrayListPacket<String, PacketList<String, IPPacket>> sentPacket = table
 						.getSentPacketArrayList();
-				ArrayListPacket<String, Hashtable<String, IPPacket>> receivedPacket = table
+				ArrayListPacket<String, PacketList<String, IPPacket>> receivedPacket = table
 						.getReceivedPacketArrayList();
 
 				ArrayList<String> IPs = sentPacket.getKeys();
@@ -325,9 +325,9 @@ public class SavePacketWindow extends JFrame {
 						true, 20);
 				JpcapWriter writer = JpcapWriter.openDumpFile(captor, fileName);
 
-				ArrayListPacket<String, Hashtable<String, IPPacket>> sentPacket = table
+				ArrayListPacket<String, PacketList<String, IPPacket>> sentPacket = table
 						.getSentPacketArrayList();
-				ArrayListPacket<String, Hashtable<String, IPPacket>> receivedPacket = table
+				ArrayListPacket<String, PacketList<String, IPPacket>> receivedPacket = table
 						.getReceivedPacketArrayList();
 
 				Enumeration<String> keys;
