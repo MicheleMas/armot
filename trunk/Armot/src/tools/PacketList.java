@@ -19,31 +19,31 @@ public class PacketList<String, V> {
 		return a.isEmpty();
 	}
 
-	public ArrayList<String> get(String key) {
+	public IPPacket get(String key) {
 		int keyPos = findKeyPos(key);
 		if (keyPos == -1)
 			return null;
 		return a.get(keyPos).getValue();
 	}
 
-	public ArrayList<String> put(String key, ArrayList<String> value) {
+	public IPPacket put(String key, IPPacket value) {
 		if (value == null)
 			throw new IllegalArgumentException();
 		int keyPos = findKeyPos(key);
 		if (keyPos == -1) {
-			a.put(new Entry<String, IPPacket>(key, value));
+			a.add(new Entry<String, IPPacket>(key, value));
 			return null;
 		}
-		ArrayList<String> old = a.get(keyPos).getValue();
+		IPPacket old = a.get(keyPos).getValue();
 		a.get(keyPos).setValue(value);
 		return old;
 	}
 
-	public ArrayList<String> remove(String key) {
+	public IPPacket remove(String key) {
 		int keyPos = findKeyPos(key);
 		if (keyPos == -1)
 			return null;
-		ArrayList<String> old = a.get(keyPos).getValue();
+		IPPacket old = a.get(keyPos).getValue();
 		a.set(keyPos, a.get(size() - 1));
 		a.remove(size() - 1);
 		return old;
@@ -73,9 +73,9 @@ public class PacketList<String, V> {
 
 	private class Entry<String, V> {
 		private String key;
-		private ArrayList<String> value;
+		private IPPacket value;
 
-		public Entry(String k, ArrayList<String> v) {
+		public Entry(String k, IPPacket v) {
 			key = k;
 			value = v;
 		}
@@ -84,7 +84,7 @@ public class PacketList<String, V> {
 			return key;
 		}
 
-		public ArrayList<String> getValue() {
+		public IPPacket getValue() {
 			return value;
 		}
 
@@ -92,7 +92,7 @@ public class PacketList<String, V> {
 			key = k;
 		}
 
-		public void setValue(ArrayList<String> v) {
+		public void setValue(IPPacket v) {
 			value = v;
 		}
 	}
