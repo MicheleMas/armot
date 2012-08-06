@@ -6,10 +6,10 @@ import java.util.Hashtable;
 import jpcap.packet.IPPacket;
 
 public class ArrayListPacket<String, V> {
-	private ArrayList<Entry<String, Hashtable<String, IPPacket>>> a;
+	private ArrayList<Entry<String, PacketList<String, IPPacket>>> a;
 
 	public ArrayListPacket() {
-		a = new ArrayList<Entry<String, Hashtable<String, IPPacket>>>();
+		a = new ArrayList<Entry<String, PacketList<String, IPPacket>>>();
 	}
 
 	public int size() {
@@ -20,31 +20,31 @@ public class ArrayListPacket<String, V> {
 		return a.isEmpty();
 	}
 
-	public Hashtable<String, IPPacket> get(String key) {
+	public PacketList<String, IPPacket> get(String key) {
 		int keyPos = findKeyPos(key);
 		if (keyPos == -1)
 			return null;
 		return a.get(keyPos).getValue();
 	}
 
-	public Hashtable<String, IPPacket> put(String key, Hashtable<String, IPPacket> value) {
+	public PacketList<String, IPPacket> put(String key, PacketList<String, IPPacket> value) {
 		if (value == null)
 			throw new IllegalArgumentException();
 		int keyPos = findKeyPos(key);
 		if (keyPos == -1) {
-			a.add(new Entry<String, Hashtable<String, IPPacket>>(key, value));
+			a.add(new Entry<String, PacketList<String, IPPacket>>(key, value));
 			return null;
 		}
-		Hashtable<String, IPPacket> old = a.get(keyPos).getValue();
+		PacketList<String, IPPacket> old = a.get(keyPos).getValue();
 		a.get(keyPos).setValue(value);
 		return old;
 	}
 
-	public Hashtable<String, IPPacket> remove(String key) {
+	public PacketList<String, IPPacket> remove(String key) {
 		int keyPos = findKeyPos(key);
 		if (keyPos == -1)
 			return null;
-		Hashtable<String, IPPacket> old = a.get(keyPos).getValue();
+		PacketList<String, IPPacket> old = a.get(keyPos).getValue();
 		a.set(keyPos, a.get(size() - 1));
 		a.remove(size() - 1);
 		return old;
@@ -74,9 +74,9 @@ public class ArrayListPacket<String, V> {
 
 	private class Entry<String, V> {
 		private String key;
-		private Hashtable<String, IPPacket> value;
+		private PacketList<String, IPPacket> value;
 
-		public Entry(String k, Hashtable<String, IPPacket> v) {
+		public Entry(String k, PacketList<String, IPPacket> v) {
 			key = k;
 			value = v;
 		}
@@ -85,7 +85,7 @@ public class ArrayListPacket<String, V> {
 			return key;
 		}
 
-		public Hashtable<String, IPPacket> getValue() {
+		public PacketList<String, IPPacket> getValue() {
 			return value;
 		}
 
@@ -93,7 +93,7 @@ public class ArrayListPacket<String, V> {
 			key = k;
 		}
 
-		public void setValue(Hashtable<String, IPPacket> v) {
+		public void setValue(PacketList<String, IPPacket> v) {
 			value = v;
 		}
 	}

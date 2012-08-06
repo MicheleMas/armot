@@ -232,7 +232,7 @@ public class SavePacketWindow extends JFrame {
 						IPs.add(RecIPs.get(i));
 				}
 				for (int i = 0; i < IPs.size(); i++) {
-					Hashtable<String, IPPacket> ht = sentPacket.get(IPs.get(i));
+					PacketList<String, IPPacket> ht = sentPacket.get(IPs.get(i));
 					Enumeration<String> keys = ht.keys();
 					int size = ht.size();
 					while (keys.hasMoreElements() && i < size) { // TODO check
@@ -331,7 +331,7 @@ public class SavePacketWindow extends JFrame {
 						.getReceivedPacketArrayList();
 
 				Enumeration<String> keys;
-				Hashtable<String, IPPacket> ht = sentPacket.get(ip);
+				PacketList<String, IPPacket> ht = sentPacket.get(ip);
 				if (ht != null) {
 					keys = ht.keys();
 					while (keys.hasMoreElements()) {
