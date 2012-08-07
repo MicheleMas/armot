@@ -82,9 +82,12 @@ public class Table {
 			ip_packet_sent.get(ip).put(time, packet);
 	}
 
-	// metodo che restituisce i pacchetti inviati da un dato ip con relativo
-	// timestamp in ordine IP-TIMESTAMP-DESTINAZIONE-PROTOCOLLO-PORTA IN USCITA
-
+	/**
+	 * metodo che restituisce i pacchetti inviati da un dato ip con relativo
+	 * timestamp in ordine: <br>IP-TIMESTAMP-DESTINAZIONE-PROTOCOLLO-PORTA IN USCITA
+	 * @param ip
+	 * @return
+	 */
 	public synchronized String[][] getIpPacketSent(String ip) {
 		if (ip_packet_sent != null && ip_packet_sent.get(ip) != null) {
 			int i = 0;
@@ -164,10 +167,13 @@ public class Table {
 		} else
 			ip_packet_received.get(ip).put(time, packet);
 	}
-
-	// metodo che restituisce i pacchetti ricevuti da un dato ip e relativo
-	// timestamp in ordine IP-TIMESTAMP-SORGENTE-PROTOCOLLO-PORTA IN INGRESSO
-
+	
+	/**
+	 * metodo che restituisce i pacchetti ricevuti da un dato ip e relativo
+	 * timestamp in ordine: <br>IP-TIMESTAMP-SORGENTE-PROTOCOLLO-PORTA IN INGRESSO
+	 * @param ip
+	 * @return
+	 */
 	public synchronized String[][] getIpPacketReceived(String ip) {
 		if (ip_packet_received != null && ip_packet_received.get(ip) != null) {
 			int i = 0;
