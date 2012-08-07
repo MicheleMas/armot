@@ -59,7 +59,6 @@ public class ConnectionsWindow extends JFrame {
 		add(panel);
 
 		showMe();
-
 	}
 
 	public void showMe() {
@@ -260,7 +259,7 @@ public class ConnectionsWindow extends JFrame {
 			add(inviatiLabel, "cell 0 0");
 			add(ricevutiLabel, "cell 0 1");
 
-			paintAll(getGraphics());
+			paintAll(getGraphics()); 
 		}
 	}
 }
