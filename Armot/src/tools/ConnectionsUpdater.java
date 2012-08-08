@@ -45,9 +45,9 @@ public class ConnectionsUpdater implements Runnable {
 						&& matrix[i][3] != null && matrix[i][4] != null) {
 					if (!dataIN.containsKey(matrix[i][1] + " " + matrix[i][4]
 							+ " " + matrix[i][3])) {
-						System.out.println("R debug! : " + matrix[i][0] + " "
-								+ matrix[i][1] + " " + matrix[i][2] + " "
-								+ matrix[i][3] + " " + matrix[i][4]);
+						// System.out.println("R debug! : " + matrix[i][0] + " "
+						// + matrix[i][1] + " " + matrix[i][2] + " "
+						// + matrix[i][3] + " " + matrix[i][4]);
 						String[] row = new String[] { matrix[i][1], // IP
 								matrix[i][4], // S PORT
 								matrix[i][3], // D PORT
@@ -74,9 +74,9 @@ public class ConnectionsUpdater implements Runnable {
 						&& matrix[i][3] != null && matrix[i][4] != null) {
 					if (!dataOUT.containsKey(matrix[i][1] + " " + matrix[i][3]
 							+ " " + matrix[i][4])) {
-						System.out.println("S debug! : " + matrix[i][0] + " "
-								+ matrix[i][1] + " " + matrix[i][2] + " "
-								+ matrix[i][3] + " " + matrix[i][4]);
+						// System.out.println("S debug! : " + matrix[i][0] + " "
+						// + matrix[i][1] + " " + matrix[i][2] + " "
+						// + matrix[i][3] + " " + matrix[i][4]);
 						String[] row = new String[] { matrix[i][1], // IP
 								matrix[i][4], // D PORT
 								matrix[i][3], // S PORT
@@ -209,7 +209,8 @@ public class ConnectionsUpdater implements Runnable {
 			oldCounter = Integer.parseInt(array[5]);
 			newCounter = table.countIpPacketSentByPort(ip,
 					Integer.parseInt(array[2]), Integer.parseInt(array[1]));
-			System.out.println("s debug! : " + array[0] +" " + array[1] + " " + array[2] + " new counter: " + newCounter );
+			// System.out.println("s debug! : " + array[0] +" " + array[1] + " "
+			// + array[2] + " new counter: " + newCounter );
 			speed = ((newCounter - oldCounter) * 65535 / 100000); // TODO check
 																	// speed
 			dataOUT.get(keys.get(i))[5] = "" + newCounter; // update counter
