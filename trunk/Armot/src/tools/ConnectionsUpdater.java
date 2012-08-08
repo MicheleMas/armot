@@ -11,15 +11,14 @@ public class ConnectionsUpdater implements Runnable {
 
 	private ArrayListConnection<String, String[]> dataIN;
 	private ArrayListConnection<String, String[]> dataOUT;
-	private JTable ricevutiTable;
-	private JTable inviatiTable;
 	private Table table;
 	private String ip;
+	private DefaultTableModel modelIN;
+	private DefaultTableModel modelOUT;
+	private ConnectionsWindow reference;
 
-	public ConnectionsUpdater(JTable ricevutiTable, JTable inviatiTable,
-			String ip) {
-		this.ricevutiTable = ricevutiTable;
-		this.inviatiTable = inviatiTable;
+	public ConnectionsUpdater(String ip, ConnectionsWindow reference) {
+		this.reference = reference;
 		this.table = new Table();
 		this.ip = ip;
 		dataIN = new ArrayListConnection<String, String[]>();
@@ -35,46 +34,61 @@ public class ConnectionsUpdater implements Runnable {
 				"Protocol", "Speed", "Counter" };
 
 		// populate dataIN
-		String[][] matrix = table.getIpPacketReceived(ip);// IP,TIMESTAMP,S
-															// PORT,PROTOCOLLO,D
-															// PORT
+		String[][] matrix = table.getIpPacketReceived(ip); // "TIMESTAMP",
+															// "SOURCE",
+															// "PROTOCOL",
+															// "DST PORT",
+															// "SRC PORT"
 		if (matrix != null) {
 			for (int i = 0; i < matrix.length; i++) {
-				if (!dataIN.containsKey(matrix[i][0] + " " + matrix[i][2] + " "
-						+ matrix[i][4])) {
-					String[] row = new String[] { matrix[i][0], // IP
-							matrix[i][2], // S PORT
-							matrix[i][4], // D PORT
-							matrix[i][3], // PROTOCOL
-							"0", // SPEED
-							""
-									+ table.countIpPacketReceivedByPort(ip,
-											Integer.parseInt(matrix[i][2]),
-											Integer.parseInt(matrix[i][4])) }; // COUNTER
-					dataIN.put(matrix[i][0] + " " + matrix[i][2] + " "
-							+ matrix[i][4], row);
+				if (matrix[i][1] != null && matrix[i][2] != null
+						&& matrix[i][3] != null && matrix[i][4] != null) {
+					if (!dataIN.containsKey(matrix[i][1] + " " + matrix[i][4]
+							+ " " + matrix[i][3])) {
+						System.out.println("R debug! : " + matrix[i][0] + " "
+								+ matrix[i][1] + " " + matrix[i][2] + " "
+								+ matrix[i][3] + " " + matrix[i][4]);
+						String[] row = new String[] { matrix[i][1], // IP
+								matrix[i][4], // S PORT
+								matrix[i][3], // D PORT
+								matrix[i][2], // PROTOCOL
+								"0", // SPEED
+								""
+										+ table.countIpPacketReceivedByPort(ip,
+												Integer.parseInt(matrix[i][4]),
+												Integer.parseInt(matrix[i][3])) }; // COUNTER
+						dataIN.put(matrix[i][1] + " " + matrix[i][4] + " "
+								+ matrix[i][3], row);
+					}
 				}
 			}
 		}
 
 		// populate dataOUT
-		matrix = table.getIpPacketSent(ip);// IP-TIMESTAMP-D PORT-PROTOCOLLO-S
-											// PORT
+		matrix = table.getIpPacketSent(ip); // "TIMESTAMP", "DESTINATION",
+											// "PROTOCOL", "SRC PORT",
+											// "DST PORT"
 		if (matrix != null) {
 			for (int i = 0; i < matrix.length; i++) {
-				if (!dataOUT.containsKey(matrix[i][0] + " " + matrix[i][2]
-						+ " " + matrix[i][4])) {
-					String[] row = new String[] { matrix[i][0], // IP
-							matrix[i][2], // D PORT
-							matrix[i][4], // S PORT
-							matrix[i][3], // PROTOCOL
-							"0", // SPEED
-							""
-									+ table.countIpPacketReceivedByPort(ip,
-											Integer.parseInt(matrix[i][4]),
-											Integer.parseInt(matrix[i][2])) }; // COUNTER
-					dataOUT.put(matrix[i][0] + " " + matrix[i][2] + " "
-							+ matrix[i][4], row);
+				if (matrix[i][1] != null && matrix[i][2] != null
+						&& matrix[i][3] != null && matrix[i][4] != null) {
+					if (!dataOUT.containsKey(matrix[i][1] + " " + matrix[i][3]
+							+ " " + matrix[i][4])) {
+						System.out.println("S debug! : " + matrix[i][0]
+								+ matrix[i][1] + matrix[i][2] + matrix[i][3]
+								+ matrix[i][4]);
+						String[] row = new String[] { matrix[i][1], // IP
+								matrix[i][4], // D PORT
+								matrix[i][3], // S PORT
+								matrix[i][2], // PROTOCOL
+								"0", // SPEED
+								""
+										+ table.countIpPacketSentByPort(ip,
+												Integer.parseInt(matrix[i][3]),
+												Integer.parseInt(matrix[i][4])) }; // COUNTER
+						dataOUT.put(matrix[i][1] + " " + matrix[i][3] + " "
+								+ matrix[i][4], row);
+					}
 				}
 			}
 		}
@@ -98,58 +112,66 @@ public class ConnectionsUpdater implements Runnable {
 			tableOUT[counter] = dataOUT.get(key);
 		}
 
-		ricevutiTable = new JTable(new DefaultTableModel(tableIN, columnNameIN));
-		inviatiTable = new JTable(
-				new DefaultTableModel(tableOUT, columnNameOUT));
-
+		modelIN = new DefaultTableModel(tableIN, columnNameIN);
+		modelOUT = new DefaultTableModel(tableOUT, columnNameOUT);
+		reference.createTables(modelIN, modelOUT);
 	}
 
 	private void updateLists() {
 
-		DefaultTableModel model = (DefaultTableModel) ricevutiTable.getModel();
-
 		// check dataIN update
-		String[][] matrix = table.getIpPacketReceived(ip);
+		String[][] matrix = table.getIpPacketReceived(ip); // "TIMESTAMP",
+															// "SOURCE",
+															// "PROTOCOL",
+															// "DST PORT",
+															// "SRC PORT"
 		if (matrix != null) {
 			for (int i = 0; i < matrix.length; i++) {
-				if (!dataOUT.containsKey(matrix[i][0] + " " + matrix[i][2]
-						+ " " + matrix[i][4])) {
-					String[] row = new String[] { matrix[i][0], // IP
-							matrix[i][2], // D PORT
-							matrix[i][4], // S PORT
-							matrix[i][3], // PROTOCOL
-							"0", // SPEED
-							""
-									+ table.countIpPacketReceivedByPort(ip,
-											Integer.parseInt(matrix[i][4]),
-											Integer.parseInt(matrix[i][2])) }; // COUNTER
-					dataOUT.put(matrix[i][0] + " " + matrix[i][2] + " "
-							+ matrix[i][4], row);
-					model.addRow(row);
+				if (matrix[i][1] != null && matrix[i][2] != null
+						&& matrix[i][3] != null && matrix[i][4] != null) {
+					if (!dataIN.containsKey(matrix[i][1] + " " + matrix[i][4]
+							+ " " + matrix[i][3])) {
+						String[] row = new String[] { matrix[i][1], // IP
+								matrix[i][3], // D PORT
+								matrix[i][4], // S PORT
+								matrix[i][2], // PROTOCOL
+								"0", // SPEED
+								""
+										+ table.countIpPacketReceivedByPort(ip,
+												Integer.parseInt(matrix[i][4]),
+												Integer.parseInt(matrix[i][3])) }; // COUNTER
+						dataIN.put(matrix[i][1] + " " + matrix[i][4] + " "
+								+ matrix[i][3], row);
+						modelIN.addRow(row);
 
+					}
 				}
 			}
 		}
 
 		// check dataOUT update
-		model = (DefaultTableModel) inviatiTable.getModel();
-		matrix = table.getIpPacketSent(ip);// IP-TIMESTAMP-D PORT-PROTOCOLLO-S PORT
+		matrix = table.getIpPacketSent(ip); // "TIMESTAMP", "DESTINATION",
+											// "PROTOCOL", "SRC PORT",
+											// "DST PORT"
 		if (matrix != null) {
 			for (int i = 0; i < matrix.length; i++) {
-				if (!dataOUT.containsKey(matrix[i][0] + " " + matrix[i][2]
-						+ " " + matrix[i][4])) {
-					String[] row = new String[] { matrix[i][0], // IP
-							matrix[i][2], // D PORT
-							matrix[i][4], // S PORT
-							matrix[i][3], // PROTOCOL
-							"0", // SPEED
-							""
-									+ table.countIpPacketReceivedByPort(ip,
-											Integer.parseInt(matrix[i][4]),
-											Integer.parseInt(matrix[i][2])) }; // COUNTER
-					dataOUT.put(matrix[i][0] + " " + matrix[i][2] + " "
-							+ matrix[i][4], row);
-					model.addRow(row);
+				if (matrix[i][1] != null && matrix[i][2] != null
+						&& matrix[i][3] != null && matrix[i][4] != null) {
+					if (!dataOUT.containsKey(matrix[i][1] + " " + matrix[i][3]
+							+ " " + matrix[i][4])) {
+						String[] row = new String[] { matrix[i][1], // IP
+								matrix[i][4], // D PORT
+								matrix[i][3], // S PORT
+								matrix[i][2], // PROTOCOL
+								"0", // SPEED
+								""
+										+ table.countIpPacketSentByPort(ip,
+												Integer.parseInt(matrix[i][3]),
+												Integer.parseInt(matrix[i][4])) }; // COUNTER
+						dataOUT.put(matrix[i][1] + " " + matrix[i][3] + " "
+								+ matrix[i][4], row);
+						modelOUT.addRow(row);
+					}
 				}
 			}
 		}
@@ -160,7 +182,6 @@ public class ConnectionsUpdater implements Runnable {
 		// this will be called every second
 
 		// dataIN update
-		TableModel model = ricevutiTable.getModel();
 		int oldCounter;
 		int newCounter;
 		int speed;
@@ -175,11 +196,11 @@ public class ConnectionsUpdater implements Runnable {
 			speed = ((newCounter - oldCounter) * 65535 / 100000); // TODO check
 																	// speed
 			dataIN.get(keys.get(i))[5] = "" + newCounter; // update counter
-			model.setValueAt("" + speed, i, 4);
+			modelOUT.setValueAt("" + newCounter, i, 5);
+			modelIN.setValueAt("" + speed, i, 4);
 		}
 
 		// dataOUT update
-		model = inviatiTable.getModel();
 		keys = dataOUT.getKeys();
 		for (int i = 0; i < keys.size(); i++) {
 			array = dataOUT.get(keys.get(i));
@@ -189,14 +210,15 @@ public class ConnectionsUpdater implements Runnable {
 			speed = ((newCounter - oldCounter) * 65535 / 100000); // TODO check
 																	// speed
 			dataOUT.get(keys.get(i))[5] = "" + newCounter; // update counter
-			model.setValueAt("" + speed, i, 4);
+			modelOUT.setValueAt("" + newCounter, i, 5);
+			modelOUT.setValueAt("" + speed, i, 4);
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		boolean stop = false;
-		while(!stop) {
+		while (!stop) {
 			try {
 				Thread.currentThread().sleep(1000L);
 				updateLists();

@@ -84,7 +84,7 @@ public class Table {
 
 	/**
 	 * metodo che restituisce i pacchetti inviati da un dato ip con relativo
-	 * timestamp in ordine: <br>IP-TIMESTAMP-DESTINAZIONE-PROTOCOLLO-PORTA IN USCITA
+	 * timestamp in ordine: <br>"TIMESTAMP", "DESTINATION", "PROTOCOL", "SRC PORT", "DST PORT"
 	 * @param ip
 	 * @return
 	 */
@@ -170,7 +170,7 @@ public class Table {
 	
 	/**
 	 * metodo che restituisce i pacchetti ricevuti da un dato ip e relativo
-	 * timestamp in ordine: <br>IP-TIMESTAMP-SORGENTE-PROTOCOLLO-PORTA IN INGRESSO
+	 * timestamp in ordine: <br>"TIMESTAMP", "SOURCE", "PROTOCOL", "DST PORT", "SRC PORT"
 	 * @param ip
 	 * @return
 	 */

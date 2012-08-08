@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import net.miginfocom.swing.MigLayout;
@@ -27,7 +28,8 @@ public class ConnectionsWindow extends JFrame {
 	private JPanel inviatiPanel = new JPanel();
 	private JTable ricevutiTable;
 	private JTable inviatiTable;
-	private ConnectionHandler handler;
+	//private ConnectionHandler handler;
+	private ConnectionsUpdater updater;
 	private Thread thread;
 	private ConnectionPanel panel;
 
@@ -50,11 +52,16 @@ public class ConnectionsWindow extends JFrame {
 		content.setBackground(Color.WHITE);
 		content.setLayout(new MigLayout());
 
-		handler = new ConnectionHandler(ip, this);
-		thread = new Thread(handler);
-		thread.setName("Handler");
-		thread.setPriority(8);
 		panel = new ConnectionPanel();
+		updater = new ConnectionsUpdater(ip, this);
+		thread = new Thread(updater);
+		thread.setName("Updater");
+		thread.setPriority(8);
+		
+		//handler = new ConnectionHandler(ip, this);
+		//thread = new Thread(handler);
+		//thread.setName("Handler");
+		//thread.setPriority(8);
 		add(new JLabel(ip + " connections:"), "wrap");
 		add(panel);
 
@@ -77,51 +84,10 @@ public class ConnectionsWindow extends JFrame {
 		panel.updateTables(listIN, columnNameIN, listOUT, columnNameOUT);
 		pack();
 	}
-
-	/*
-	 * public void uptateTables(String[][] listIN, String[] columnNameIN,
-	 * String[][] listOUT, String[] columnNameOUT) { removeAll();
-	 * 
-	 * System.out.println("update IN table, size: " + listIN.length); if (listIN
-	 * != null) { inviatiTable = new JTable(listIN, columnNameIN); TableColumn
-	 * column = null; for (int i = 0; i < 6; i++) { column =
-	 * inviatiTable.getColumnModel().getColumn(i); if (i == 0) {
-	 * column.setPreferredWidth(105); // third column is bigger } else if (i ==
-	 * 1) { column.setPreferredWidth(30); // third column is bigger } else {
-	 * column.setPreferredWidth(10); } }
-	 * inviatiTable.setAutoCreateRowSorter(true);
-	 * inviatiTable.setPreferredScrollableViewportSize(new Dimension(450, 500 /
-	 * 2 - 27)); inviatiTable.setFillsViewportHeight(true); JScrollPane
-	 * scrollPane = new JScrollPane(inviatiTable); add(scrollPane, "cell 1 0");
-	 * } if (listOUT != null) { ricevutiTable = new JTable(listOUT,
-	 * columnNameOUT); TableColumn column = null; for (int i = 0; i < 6; i++) {
-	 * column = ricevutiTable.getColumnModel().getColumn(i); if (i == 0) {
-	 * column.setPreferredWidth(105); // third column is bigger } else if (i ==
-	 * 1) { column.setPreferredWidth(30); // third column is bigger } else {
-	 * column.setPreferredWidth(10); } }
-	 * ricevutiTable.setAutoCreateRowSorter(true);
-	 * ricevutiTable.setPreferredScrollableViewportSize(new Dimension(450, 500 /
-	 * 2 - 27)); ricevutiTable.setFillsViewportHeight(true); JScrollPane
-	 * scrollPane = new JScrollPane(ricevutiTable); add(scrollPane, "cell 1 1");
-	 * } JLabel ricevutiLabel = new
-	 * JLabel("<html>R<br> E<br>C<br>E<br>I<br>V<br>E<br> D</html>");
-	 * ricevutiLabel.setForeground(Color.BLUE); ricevutiLabel.setFont(new
-	 * Font("Arial", Font.BOLD, 16)); ricevutiLabel.setBackground(new Color(173,
-	 * 216, 230)); ricevutiLabel.setOpaque(true);
-	 * ricevutiLabel.setPreferredSize(new Dimension(30, 500 / 2 - 7));
-	 * ricevutiLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	 * ricevutiLabel.setHorizontalAlignment(JLabel.CENTER); JLabel inviatiLabel
-	 * = new JLabel("<html>S<br>E<br>N<br>T<br></html>");
-	 * inviatiLabel.setForeground(Color.DARK_GRAY); inviatiLabel.setFont(new
-	 * Font("Arial", Font.BOLD, 16)); inviatiLabel.setBackground(new Color(211,
-	 * 211, 211)); inviatiLabel.setOpaque(true);
-	 * inviatiLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	 * inviatiLabel.setPreferredSize(new Dimension(30, 500 / 2 - 7));
-	 * inviatiLabel.setHorizontalAlignment(JLabel.CENTER); add(inviatiLabel,
-	 * "cell 0 0"); add(ricevutiLabel, "cell 0 1");
-	 * 
-	 * paintAll(getGraphics()); }
-	 */
+	
+	public void createTables(DefaultTableModel modelIN, DefaultTableModel modelOUT) {
+		panel.createTables(modelIN, modelOUT);
+	}
 
 	private class WindowsClosing implements WindowListener {
 
@@ -170,9 +136,51 @@ public class ConnectionsWindow extends JFrame {
 
 	private class ConnectionPanel extends JPanel {
 
-		public ConnectionPanel() {
+		public ConnectionPanel() { // old
 			super();
 			setLayout(new MigLayout());
+		}
+		
+		public void createTables(DefaultTableModel modelIN, DefaultTableModel modelOUT) {
+			ricevutiTable = new JTable(modelIN);
+			inviatiTable = new JTable(modelOUT);
+			inviatiTable.setAutoCreateRowSorter(true);
+			inviatiTable.setPreferredScrollableViewportSize(new Dimension(
+					450, 500 / 2 - 27));
+			inviatiTable.setFillsViewportHeight(true);
+			JScrollPane scrollPane = new JScrollPane(inviatiTable);
+			add(scrollPane, "cell 1 0");
+			
+			ricevutiTable.setAutoCreateRowSorter(true);
+			ricevutiTable.setPreferredScrollableViewportSize(new Dimension(
+					450, 500 / 2 - 27));
+			ricevutiTable.setFillsViewportHeight(true);
+			JScrollPane scrollPane2 = new JScrollPane(ricevutiTable);
+			add(scrollPane2, "cell 1 1");
+			
+			JLabel ricevutiLabel = new JLabel(
+					"<html>R<br> E<br>C<br>E<br>I<br>V<br>E<br> D</html>");
+			ricevutiLabel.setForeground(Color.BLUE);
+			ricevutiLabel.setFont(new Font("Arial", Font.BOLD, 16));
+			ricevutiLabel.setBackground(new Color(173, 216, 230));
+			ricevutiLabel.setOpaque(true);
+			ricevutiLabel.setPreferredSize(new Dimension(30, 500 / 2 - 7));
+			ricevutiLabel
+					.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			ricevutiLabel.setHorizontalAlignment(JLabel.CENTER);
+			JLabel inviatiLabel = new JLabel(
+					"<html>S<br>E<br>N<br>T<br></html>");
+			inviatiLabel.setForeground(Color.DARK_GRAY);
+			inviatiLabel.setFont(new Font("Arial", Font.BOLD, 16));
+			inviatiLabel.setBackground(new Color(211, 211, 211));
+			inviatiLabel.setOpaque(true);
+			inviatiLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			inviatiLabel.setPreferredSize(new Dimension(30, 500 / 2 - 7));
+			inviatiLabel.setHorizontalAlignment(JLabel.CENTER);
+			add(inviatiLabel, "cell 0 0");
+			add(ricevutiLabel, "cell 0 1");
+
+			paintAll(getGraphics());
 		}
 
 		public void updateTables(String[][] listIN, String[] columnNameIN,
