@@ -74,9 +74,9 @@ public class ConnectionsUpdater implements Runnable {
 						&& matrix[i][3] != null && matrix[i][4] != null) {
 					if (!dataOUT.containsKey(matrix[i][1] + " " + matrix[i][3]
 							+ " " + matrix[i][4])) {
-						System.out.println("S debug! : " + matrix[i][0]
-								+ matrix[i][1] + matrix[i][2] + matrix[i][3]
-								+ matrix[i][4]);
+						System.out.println("S debug! : " + matrix[i][0] + " "
+								+ matrix[i][1] + " " + matrix[i][2] + " "
+								+ matrix[i][3] + " " + matrix[i][4]);
 						String[] row = new String[] { matrix[i][1], // IP
 								matrix[i][4], // D PORT
 								matrix[i][3], // S PORT
@@ -101,6 +101,7 @@ public class ConnectionsUpdater implements Runnable {
 		while (e.hasMoreElements() && counter < size) {
 			String key = e.nextElement();
 			tableIN[counter] = dataIN.get(key);
+			counter++;
 		}
 
 		size = dataOUT.size();
@@ -110,6 +111,7 @@ public class ConnectionsUpdater implements Runnable {
 		while (e.hasMoreElements() && counter < size) {
 			String key = e.nextElement();
 			tableOUT[counter] = dataOUT.get(key);
+			counter++;
 		}
 
 		modelIN = new DefaultTableModel(tableIN, columnNameIN);
@@ -191,7 +193,7 @@ public class ConnectionsUpdater implements Runnable {
 		for (int i = 0; i < keys.size(); i++) {
 			array = dataIN.get(keys.get(i));
 			oldCounter = Integer.parseInt(array[5]);
-			newCounter = table.countIpPacketReceivedByPort(array[0],
+			newCounter = table.countIpPacketReceivedByPort(ip,
 					Integer.parseInt(array[1]), Integer.parseInt(array[2]));
 			speed = ((newCounter - oldCounter) * 65535 / 100000); // TODO check
 																	// speed
@@ -205,14 +207,17 @@ public class ConnectionsUpdater implements Runnable {
 		for (int i = 0; i < keys.size(); i++) {
 			array = dataOUT.get(keys.get(i));
 			oldCounter = Integer.parseInt(array[5]);
-			newCounter = table.countIpPacketReceivedByPort(array[0],
-					Integer.parseInt(array[1]), Integer.parseInt(array[2]));
+			newCounter = table.countIpPacketSentByPort(ip,
+					Integer.parseInt(array[2]), Integer.parseInt(array[1]));
+			System.out.println("s debug! : " + array[0] +" " + array[1] + " " + array[2] + " new counter: " + newCounter );
 			speed = ((newCounter - oldCounter) * 65535 / 100000); // TODO check
 																	// speed
 			dataOUT.get(keys.get(i))[5] = "" + newCounter; // update counter
 			modelOUT.setValueAt("" + newCounter, i, 5);
 			modelOUT.setValueAt("" + speed, i, 4);
 		}
+		modelIN.fireTableDataChanged();
+		modelOUT.fireTableDataChanged();
 	}
 
 	@Override
