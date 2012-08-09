@@ -158,9 +158,8 @@ public class ConnectionHandler implements Runnable {
 					populateLists();
 					counter = 0;
 				}
-				reference.updateTables(listIN, columnNameIN, listOUT, columnNameOUT);
-				//reference.updateINTable(listIN, columnNameIN);
-				//reference.updateOUTTable(listOUT, columnNameOUT);
+				//reference.updateTables(listIN, columnNameIN, listOUT, columnNameOUT);
+				
 
 				Thread.currentThread().sleep(1000L);
 
