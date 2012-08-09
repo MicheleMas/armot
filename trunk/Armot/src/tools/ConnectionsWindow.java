@@ -18,7 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -79,11 +78,11 @@ public class ConnectionsWindow extends JFrame {
 		setVisible(false);
 	}
 
-	public void updateTables(String[][] listIN, String[] columnNameIN,
+	/*public void updateTables(String[][] listIN, String[] columnNameIN,
 			String[][] listOUT, String[] columnNameOUT) {
 		panel.updateTables(listIN, columnNameIN, listOUT, columnNameOUT);
 		pack();
-	}
+	}*/
 	
 	public void createTables(DefaultTableModel modelIN, DefaultTableModel modelOUT) {
 		panel.createTables(modelIN, modelOUT);
@@ -183,7 +182,7 @@ public class ConnectionsWindow extends JFrame {
 			paintAll(getGraphics());
 		}
 
-		public void updateTables(String[][] listIN, String[] columnNameIN,
+		/*public void updateTables(String[][] listIN, String[] columnNameIN,
 				String[][] listOUT, String[] columnNameOUT) {
 
 			// keep selected rows after update
@@ -268,6 +267,6 @@ public class ConnectionsWindow extends JFrame {
 			add(ricevutiLabel, "cell 0 1");
 
 			paintAll(getGraphics()); 
-		}
+		}*/
 	}
 }
