@@ -40,8 +40,15 @@ public class TChooseInterface {
 					System.out
 							.println("Selection error, please use a number between 0 and "
 									+ (devices.length - 1));
-				else
-					System.out.println("bene");
+				else {
+					String myIp;
+					try {
+						myIp = ("" + devices[selection].addresses[0].address).substring(1);
+						Main main = new Main(selection, myIp);
+					} catch (Exception err) {
+						System.out.println("Selection error, the device selected is not in use");
+					}
+				}
 			} catch (NumberFormatException e) {
 				System.out
 						.println("Selection error, please use a number between 0 and "
