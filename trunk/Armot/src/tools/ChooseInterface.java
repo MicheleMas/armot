@@ -62,6 +62,18 @@ public class ChooseInterface extends JFrame {
 		// set window
 		setLayout(new MigLayout());
 		all.setLayout(new MigLayout());
+		try {
+			// Set System L&F
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (UnsupportedLookAndFeelException e) {
+			// handle exception
+		} catch (ClassNotFoundException e) {
+			// handle exception
+		} catch (InstantiationException e) {
+			// handle exception
+		} catch (IllegalAccessException e) {
+			// handle exception
+		}
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setIconImage(new ImageIcon(ClassLoader.getSystemResource("my-net.png")).getImage());
 		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -176,12 +188,8 @@ public class ChooseInterface extends JFrame {
 
 	}
 
-	/**
-	 * main method
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	/*
+	public void Main() {
 
 		try {
 			// Set System L&F
@@ -196,5 +204,5 @@ public class ChooseInterface extends JFrame {
 			// handle exception
 		}
 		new ChooseInterface();
-	}
+	}*/
 }

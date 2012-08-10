@@ -72,9 +72,7 @@ public class MainWindow extends JFrame {
 	 * forwarding status
 	 */
 	private JLabel actualState;
-	/**
-	 * menubar contenente i pulsanti APRI , SALVA , PDF , INVIA modificata nel colore e nella forma
-	 */
+	
 	private JMenuBar menubar = new JMenuBar() 
 	{
 		/** Stroke size. it is recommended to set it to 1 for better view */
