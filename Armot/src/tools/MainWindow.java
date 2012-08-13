@@ -211,12 +211,12 @@ public class MainWindow extends JFrame {
 
 					timer.start();
 
-					try {
+					/*try {
 						JpcapCaptor jpcap = JpcapCaptor.openDevice(devices[interfaceChosen], 65535, true, 20);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 					poison.start(interfaceChosen);
 					sender = poison.getSender();
 					container = new ToolBox();

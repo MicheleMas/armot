@@ -59,8 +59,8 @@ public class Table {
 	// metodo che restituisce gli ip contattati da un dato ip
 
 	public ArrayList<String> getConnections(String ip) {
-		System.out.print("selected ip: " + ip);
-		System.out.println("  size: " + from_to.get(ip).size());
+		//System.out.print("selected ip: " + ip);
+		//System.out.println("  size: " + from_to.get(ip).size());
 		return from_to.get(ip);
 	}
 
