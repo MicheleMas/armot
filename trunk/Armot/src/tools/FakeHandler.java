@@ -19,7 +19,7 @@ public class FakeHandler {
 				new Sender(targetIP, ip, myMac, sender));
 		packetSender.start();
 		handler.put(ip + "-" + targetIP, packetSender);
-		System.out.println("FakeHandler: adding " + ip + "-" + targetIP); // +++++ DEBUG +++++
+		// System.out.println("FakeHandler: adding " + ip + "-" + targetIP); // +++++ DEBUG +++++
 	}
 
 	public boolean isActive(String ip, String targetIP) {
@@ -30,7 +30,7 @@ public class FakeHandler {
 		Thread packetSender = handler.get(ip + "-" + targetIP);
 		if (packetSender != null) {
 			packetSender.interrupt();
-			System.out.println("FakeHandler: removed " + ip + "-" + targetIP); // +++++ DEBUG +++++
+			// System.out.println("FakeHandler: removed " + ip + "-" + targetIP); // +++++ DEBUG +++++
 		} else
 			System.err.println("FakeHandler: can't close Fake Thread from "
 					+ ip + " to " + targetIP); // +++++ DEBUG +++++

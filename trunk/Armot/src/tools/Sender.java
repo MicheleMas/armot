@@ -48,7 +48,7 @@ public class Sender implements Runnable {
 				System.out.println("Thread error: ip " + targetIP + " not found");
 			}
 		} catch (UnknownHostException e) {
-			System.out.println("A sender thread (to IP " + targetIP + ") died unexpectedly");
+			System.out.println(connectedIP + " is not a valid IP");
 		} catch (InterruptedException e) {
 			stop = true;
 			// System.out.println("The thread with target " + targetIP + " has been interrupted without stop method");
@@ -60,7 +60,7 @@ public class Sender implements Runnable {
 
 	public byte[] MacStringToByte(String macAddress) {
 		String[] split = macAddress.split(":");
-		System.out.println("length = " + split.length);
+		//System.out.println("length = " + split.length);
 		if (split.length != 6)
 			throw new IllegalArgumentException();
 		byte[] ret = new byte[6];
