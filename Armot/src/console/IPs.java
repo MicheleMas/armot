@@ -85,7 +85,7 @@ public class IPs {
 		}
 	}
 	
-	private void poison(String input) {
+	private void poison(String input) { // TODO qualcosa non va qui!
 		String[] commands = input.split(" ");
 		if(commands.length != 3)
 			System.out.println("Syntax error, poison usage: poison <IP> <targetIP>");
