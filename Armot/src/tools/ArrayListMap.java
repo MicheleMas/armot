@@ -59,8 +59,8 @@ public class ArrayListMap<String, V> {
 
 	public ArrayList<String> getKeys() {
 		ArrayList<String> keys = new ArrayList<String>();
-		if (keys == null || keys.size() != size())
-			throw new IllegalArgumentException();
+		/*if (keys == null || keys.size() != size())
+			throw new IllegalArgumentException();*/
 		for (int i = 0; i < size(); i++)
 			keys.add(a.get(i).getKey());
 		return keys;

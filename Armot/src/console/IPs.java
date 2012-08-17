@@ -1,12 +1,13 @@
 package console;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import jpcap.JpcapCaptor;
 import tools.FakeHandler;
-import tools.Sender;
 import tools.Table;
 import tools.ToolBox;
 
@@ -43,7 +44,7 @@ public class IPs {
 				returnToMenu = true;
 				break;
 			case 4:
-				// TODO help
+				this.help();
 				break;
 			case 5:
 				this.poison(input);
@@ -53,7 +54,7 @@ public class IPs {
 				break;
 			}
 			if(!returnToMenu)
-				System.out.print("IPs ->");
+				System.out.print("IPs->");
 		}
 	}
 	
@@ -85,7 +86,7 @@ public class IPs {
 		}
 	}
 	
-	private void poison(String input) { // TODO qualcosa non va qui!
+	private void poison(String input) {
 		String[] commands = input.split(" ");
 		if(commands.length != 3)
 			System.out.println("Syntax error, poison usage: poison <IP> <targetIP>");
@@ -93,7 +94,9 @@ public class IPs {
 			try {
 			(InetAddress.getByName(commands[2])).getAddress();
 			if(table.contains(commands[1])) {
-				handler.addThread(commands[2], commands[1], container.getMyMac(), container.getSender());
+				JpcapCaptor captor = JpcapCaptor.openDevice(container.getNic(), 65535,
+						true, 20);
+				handler.addThread(commands[2], commands[1], container.getMyMac(), captor.getJpcapSenderInstance());
 				System.out.println("Poisoner thread started, gathering packets...");
 				System.out.println("use connections command in the main menu to handle current threads");
 			}
@@ -101,8 +104,19 @@ public class IPs {
 				System.out.println(commands[1] + " not found, no ARP packet received from this IP");
 			} catch (UnknownHostException e) {
 				System.out.println(commands[2] + " is not a valid IP");
+			} catch (IOException e) {
+				System.out.println("error opening JPcap captor");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+	}
+	
+	private void help() {
+		System.out.println("IPs commands list:");
+		System.out.println("show                 - list all known IPs");
+		System.out.println("scan <ip>            - list all IPs in comunication with <ip>");
+		System.out.println("poison <target> <ip> - impersonate <ip> for <target> (all TCP/UDP packets from ip to target will be redirected to you)");
 	}
 	
 	private int commandInterpreter(String commands) {

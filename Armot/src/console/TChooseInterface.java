@@ -46,6 +46,7 @@ public class TChooseInterface {
 						myIp = ("" + devices[selection].addresses[0].address).substring(1);
 						Main main = new Main(selection, myIp);
 					} catch (Exception err) {
+						err.printStackTrace();
 						System.out.println("Selection error, the device selected is not in use");
 					}
 				}
