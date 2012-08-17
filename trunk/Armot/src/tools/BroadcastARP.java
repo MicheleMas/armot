@@ -48,7 +48,7 @@ public class BroadcastARP {
 			arp.datalink = eth;
 			sender.sendPacket(arp);
 		} catch (Exception e) {
-			System.err.println("BroadcastARP error: bad host name");
+			System.err.println("Broadcast error: bad host name");
 		}
 	}
 	
@@ -92,14 +92,14 @@ public class BroadcastARP {
 			arp.datalink = eth;
 			sender.sendPacket(arp);
 		} catch (Exception e) {
-			System.err.println("BroadcastARP error: bad host name");
+			System.err.println("BroadcastARP error: bad host name or mac address");
 			return false;
 		} return true;
 	}
 	
 	public byte[] MacStringToByte(String macAddress) {
 		String[] split = macAddress.split(":");
-		System.out.println("length = " + split.length);
+		//System.out.println("length = " + split.length);
 		if (split.length != 6)
 			throw new IllegalArgumentException();
 		byte[] ret = new byte[6];

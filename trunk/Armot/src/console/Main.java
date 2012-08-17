@@ -5,10 +5,12 @@ import java.util.Scanner;
 
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
+import tools.FakeHandler;
 import tools.Poisoner;
 import tools.Reader;
 import tools.Table;
 import tools.ToolBox;
+import tools.Utilities;
 
 public class Main {
 
@@ -21,14 +23,16 @@ public class Main {
 	private int interfaceChosen;
 	private Reader reader;
 	private final NetworkInterface[] devices = JpcapCaptor.getDeviceList();
+	private FakeHandler handler;
 
 	public Main(final int interfaceChosen, String myIP) {
 		this.myIP = myIP;
 		poisoner = new Poisoner();
 		table = new Table();
 		this.interfaceChosen = interfaceChosen;
-		myMac = devices[interfaceChosen].mac_address;
+		this.myMac = devices[interfaceChosen].mac_address;
 		container = new ToolBox();
+		handler = new FakeHandler();
 
 		Scanner in = new Scanner(System.in);
 		String input;
@@ -52,19 +56,19 @@ public class Main {
 				this.IPs();
 				break;
 			case 4:
-				// TODO
+				this.connections();
 				break;
 			case 5:
-				// TODO
+				this.forward(input);
 				break;
 			case 6:
-				// TODO
+				this.broadcast();
 				break;
 			case 7:
-				// TODO
+				this.read();
 				break;
 			case 8:
-				// TODO
+				this.export();
 				break;
 			case 9: {
 				System.out.println("GoodBye");
@@ -89,6 +93,7 @@ public class Main {
 			table.resetTable();
 			poisoner.start(this.interfaceChosen);
 			container.setSender(poisoner.getSender());
+			container.setMyMac(myMac);
 			try {
 				JpcapCaptor captor = JpcapCaptor.openDevice(devices[interfaceChosen], 65535, true, 20);
 				container.setNic(devices[interfaceChosen]);
@@ -106,6 +111,9 @@ public class Main {
 	
 	private void stop() {
 		if(isStarted) {
+			System.out.print("closing open connections...");
+			handler.stopAll();
+			System.out.println(" done");
 			poisoner.stop();
 			reader.stop();
 			isStarted = false;
@@ -121,6 +129,49 @@ public class Main {
 			ips = new IPs();
 		else
 			System.out.println("capture not started, use start command");
+	}
+	
+	private void connections() {
+		Connections connections = new Connections();
+	}
+	
+	private void forward(String input) {
+		String[] split = input.split(" ");
+		if(split.length >= 2) {
+			if("ON".equalsIgnoreCase(split[1])) {
+				if(Utilities.enableForward())
+					System.out.println("Forward activated");
+				else
+					System.out.println("Something gone wrong");
+			} else {
+				if("OFF".equalsIgnoreCase(split[1])) {
+					if(Utilities.disableForward())
+						System.out.println("Forward deactivated");
+					else
+						System.out.println("Something gone wrong");
+				} else {
+					System.out.println("Forward accepts only ON or OFF");
+				}
+			}
+		} else {
+			System.out.println("Error, type \"forward on\" of \"forward off\" ");
+		}
+	}
+	
+	private void broadcast() {
+		Broadcast bc;
+		if(isStarted)
+			bc = new Broadcast();
+		else
+			System.out.println("capture not started, use start command");
+	}
+	
+	private void read() {
+		Read read = new Read();
+	}
+	
+	private void export() {
+		Export export = new Export();
 	}
 	
 	private void help() {
@@ -154,6 +205,8 @@ public class Main {
 		if (command.toUpperCase().equals("IPS"))
 			return 3;
 		if (command.toUpperCase().equals("CONNECTIONS"))
+			return 4;
+		if (command.toUpperCase().equals("CONNECTION"))
 			return 4;
 		if (command.toUpperCase().equals("FORWARD"))
 			return 5;

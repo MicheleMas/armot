@@ -65,9 +65,7 @@ public class Poisoner implements Runnable {
 		try {
 			captor = JpcapCaptor.openDevice(nics[number], 65535, true, 20);
 			sender = captor.getJpcapSenderInstance();
-			macAddress = nics[number].mac_address; // we force to use the MAC
-													// address of the PC in use
-													// (good idea?)
+			macAddress = nics[number].mac_address; 
 		} catch (IOException e) {
 			ok = false;
 		} catch (NullPointerException e) {

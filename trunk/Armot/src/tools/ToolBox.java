@@ -10,6 +10,7 @@ public class ToolBox {
 	private static byte[] myMac;
 	private static JpcapCaptor captor;
 	private static NetworkInterface nic;
+	private static boolean flag;
 	
 	public void setSender (JpcapSender newSender) {
 		sender = newSender;
@@ -35,4 +36,11 @@ public class ToolBox {
 		return nic;
 	}
 
+	/*public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+	
+	public boolean getFlag() {
+		return this.flag;
+	}*/
 }
