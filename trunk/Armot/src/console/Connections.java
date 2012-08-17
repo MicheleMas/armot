@@ -32,6 +32,9 @@ public class Connections {
 			case 3:
 				returnToMenu = true;
 				break;
+			case 4:
+				this.help();
+				break;
 			default:
 				// TODO
 				break;
@@ -39,6 +42,12 @@ public class Connections {
 			if(!returnToMenu)
 				System.out.print("Connections->");
 		}
+	}
+	
+	private void help() {
+		System.out.println("show                - show current fake ARP flow");
+		System.out.println("stop <target> <ip>  - stop ARP flow to <target>");
+		System.out.println("back                - return to the previous menu");
 	}
 	
 	private void show() {
@@ -78,6 +87,8 @@ public class Connections {
 			return 2;
 		if (command.toUpperCase().equals("BACK"))
 			return 3;
+		if (command.toUpperCase().equals("HELP"))
+			return 4;
 		return -1;
 	}
 

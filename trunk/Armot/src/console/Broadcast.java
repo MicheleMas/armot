@@ -24,11 +24,7 @@ public class Broadcast {
 			mac += Integer.toHexString(macArray[i] & 0xFF);
 		}
 		
-		System.out.println("Send custom grautitous ARP,");
-		System.out.println("1 - set ip with setIP <ip>");
-		System.out.println("2 - set mac with setMAC <mac> (default: " + mac + ")");
-		System.out.println("3 - use send command to send broadcast ARP request\n");
-		System.out.println("warning: this method can be easily detected");
+		this.help();
 		System.out.print("Broadcast->");
 		
 		String input;
@@ -49,6 +45,9 @@ public class Broadcast {
 			case 4:
 				this.send();
 				break;
+			case 5:
+				this.help();
+				break;
 			default:
 				// TODO
 				break;
@@ -56,6 +55,14 @@ public class Broadcast {
 			if(!returnToMenu)
 				System.out.print("Broadcast->");
 		}
+	}
+	
+	private void help() {
+		System.out.println("Send custom ARP packet,");
+		System.out.println("1 - set ip with setIP <ip>");
+		System.out.println("2 - set mac with setMAC <mac> (default: " + mac + ")");
+		System.out.println("3 - use send command to send broadcast ARP request\n");
+		System.out.println("warning: this method can be easily detected");
 	}
 	
 	private void setIP(String input) {
@@ -131,6 +138,8 @@ public class Broadcast {
 			return 3;
 		if (command.toUpperCase().equals("SEND"))
 			return 4;
+		if (command.toUpperCase().equals("HELP"))
+			return 5;
 		return -1;
 	}
 	

@@ -235,11 +235,7 @@ public class SavePacketWindow extends JFrame {
 					PacketList<String, IPPacket> ht = sentPacket.get(IPs.get(i));
 					Enumeration<String> keys = ht.keys();
 					int size = ht.size();
-					while (keys.hasMoreElements() && i < size) { // TODO check
-																	// the
-																	// meaning
-																	// of i <
-																	// size
+					while (keys.hasMoreElements() && i < size) { 
 						String key = keys.nextElement();
 						IPPacket packet = ht.get(key);
 						writer.writePacket(packet);
@@ -276,7 +272,7 @@ public class SavePacketWindow extends JFrame {
 					FileWriter fw = new FileWriter(file);
 					BufferedWriter bw = new BufferedWriter(fw);
 					PrintWriter outFile = new PrintWriter(bw);
-
+					
 					String print = Utilities.printPackets(ip);
 					outFile.println(print);
 
@@ -304,8 +300,6 @@ public class SavePacketWindow extends JFrame {
 		}
 		hideMe();
 		return 1;
-
-		// TODO check if it works
 
 	}
 

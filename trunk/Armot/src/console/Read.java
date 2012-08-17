@@ -35,6 +35,9 @@ public class Read {
 			case 3:
 				returnToMenu = true;
 				break;
+			case 4:
+				this.help();
+				break;
 			default:
 				// TODO
 				break;
@@ -42,6 +45,13 @@ public class Read {
 			if (!returnToMenu)
 				System.out.print("Read->");
 		}
+	}
+	
+	private void help() {
+		System.out.println("list             - show all connections");
+		System.out.println("show <ip1> <ip2> - show packets between <ip1> and <ip2>");
+		System.out.println("back             - return to the previous menu");
+		System.out.println("to save packets use export command in the main menu");
 	}
 
 	private void list() {
@@ -101,6 +111,8 @@ public class Read {
 			return 2;
 		if (command.toUpperCase().equals("BACK"))
 			return 3;
+		if (command.toUpperCase().equals("HELP"))
+			return 4;
 		return -1;
 	}
 

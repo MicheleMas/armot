@@ -117,6 +117,7 @@ public class IPs {
 		System.out.println("show                 - list all known IPs");
 		System.out.println("scan <ip>            - list all IPs in comunication with <ip>");
 		System.out.println("poison <target> <ip> - impersonate <ip> for <target> (all TCP/UDP packets from ip to target will be redirected to you)");
+		System.out.println("back                 - return to the previous menu");
 	}
 	
 	private int commandInterpreter(String commands) {
