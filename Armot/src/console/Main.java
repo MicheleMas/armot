@@ -175,7 +175,15 @@ public class Main {
 	}
 	
 	private void help() {
-		System.out.println("todo!");
+		System.out.println("start       - start to capture packets");
+		System.out.println("stop        - stop to capture packets");
+		System.out.println("IPs         - show IPs in the network and allows to poison other hosts");
+		System.out.println("connections - show and stop current poisoning");
+		System.out.println("forward     - enable or disable packets forwarding");
+		System.out.println("broadcast   - send broadcast custom ARP packets");
+		System.out.println("read        - show saved packets");
+		System.out.println("export      - save packets in txt or wireshark compatible format");
+		System.out.println("exit        - quit Armot");
 	}
 
 	/**
@@ -219,6 +227,8 @@ public class Main {
 		if (command.toUpperCase().equals("EXIT"))
 			return 9;
 		if (command.toUpperCase().equals("HELP"))
+			return 10;
+		if (command.toUpperCase().equals("QUIT"))
 			return 10;
 
 		return -1;
