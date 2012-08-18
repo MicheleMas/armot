@@ -233,13 +233,14 @@ public class SavePacketWindow extends JFrame {
 				}
 				for (int i = 0; i < IPs.size(); i++) {
 					PacketList<String, IPPacket> ht = sentPacket.get(IPs.get(i));
+					if(ht != null) {
 					Enumeration<String> keys = ht.keys();
 					int size = ht.size();
 					while (keys.hasMoreElements() && i < size) { 
 						String key = keys.nextElement();
 						IPPacket packet = ht.get(key);
 						writer.writePacket(packet);
-					} // TODO check!
+					} }// TODO check!
 				}
 
 				writer.close();

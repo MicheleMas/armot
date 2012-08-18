@@ -36,7 +36,7 @@ public class Connections {
 				this.help();
 				break;
 			default:
-				// TODO
+				this.help();
 				break;
 			}
 			if(!returnToMenu)
@@ -45,8 +45,8 @@ public class Connections {
 	}
 	
 	private void help() {
-		System.out.println("show                - show current fake ARP flow");
-		System.out.println("stop <target> <ip>  - stop ARP flow to <target>");
+		System.out.println("show                - show current ARP poisoning");
+		System.out.println("stop <target> <ip>  - stop ARP poisoning to <target>");
 		System.out.println("back                - return to the previous menu");
 	}
 	

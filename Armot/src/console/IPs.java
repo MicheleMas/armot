@@ -50,7 +50,7 @@ public class IPs {
 				this.poison(input);
 				break;
 			default:
-				// TODO
+				this.help();
 				break;
 			}
 			if(!returnToMenu)

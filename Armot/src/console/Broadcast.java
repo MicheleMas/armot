@@ -49,7 +49,7 @@ public class Broadcast {
 				this.help();
 				break;
 			default:
-				// TODO
+				this.help();
 				break;
 			}
 			if(!returnToMenu)
