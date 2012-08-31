@@ -18,7 +18,7 @@ public class Credits extends JFrame {
 		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 
 		RoundedPanel panel = new RoundedPanel(
-				"<html>ARMOT (Arp MOnitoring Tool)<br><br>CREATED BY:<br><br>MICHELE MASSARO (programmer)<br>ANDREA BASSO (programmer)<br>ALEX TOMASELLO (programmer)<br>FEDERICO LANCERIN (collaborator)<br><br>CREATED FOR:<br>\"RETI DI CALCOLATORI\"<br>2011-2012<br>prof. PAOLO BERTASI");
+				"<html>ARMOT (Arp MOnitoring Tool)<br><br>CREATED BY:<br><br>MICHELE MASSARO (programmer)<br>ANDREA BASSO (programmer)<br>ALEX TOMASELLO (programmer)<br>FEDERICO LANCERIN (collaborator)");
 		setContentPane(panel);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		MouseAdapter ml4 = new MouseAdapter() {
