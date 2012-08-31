@@ -211,7 +211,7 @@ public class ConnectionsUpdater implements Runnable {
 					Integer.parseInt(array[2]), Integer.parseInt(array[1]));
 			// System.out.println("s debug! : " + array[0] +" " + array[1] + " "
 			// + array[2] + " new counter: " + newCounter );
-			speed = ((newCounter - oldCounter) * 65535 / 100000); // TODO check
+			speed = ((newCounter - oldCounter) * 65535 / 2000000); // TODO check
 																	// speed
 			dataOUT.get(keys.get(i))[5] = "" + newCounter; // update counter
 			modelOUT.setValueAt("" + newCounter, i, 5);
