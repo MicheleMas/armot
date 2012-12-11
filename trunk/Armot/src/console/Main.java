@@ -1,3 +1,22 @@
+/*
+    ARMOT  Arp Monitoring Tool
+    
+    Copyright (C) 2012  Massaro Michele, Tomasello Alex
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package console;
 
 import java.io.IOException;
@@ -89,11 +108,6 @@ public class Main {
 	
 	private void start() {
 		if(!isStarted) {
-      System.out.println("Armot Copyright (C) 2012  Massaro Michele, Tomasello Alex");
-      System.out.println("This program comes with ABSOLUTELY NO WARRANTY;");
-      System.out.println("This is free software, and you are welcome to redistribute it");
-      System.out.println("under the terms of the GNU General Public License as published by");
-      System.out.println("the Free Software Foundation\n");
 			System.out.print("starting...");
 			table.resetTable();
 			poisoner.start(this.interfaceChosen);
