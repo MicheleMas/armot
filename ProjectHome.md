@@ -1,0 +1,4 @@
+A LAN monitoring tool based on ARP poisoning.
+With this software is possible to monitor every activity on a local area network, every packet sent and received of any host connected in the same network. It uses JPcap library to perform a "man in the middle" attack and allow the user to read and stop every packet. It include a simple GUI that simplify the operation.
+
+Remember to use that software only on your own network, or ask for the permission to the network owner. The authors are not responsibles of the use of this software, or the possible damage that this software can do to your computer/network.
